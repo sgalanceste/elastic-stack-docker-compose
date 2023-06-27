@@ -1,0 +1,81 @@
+#CONSTRUCCIÓN ANALIZADOR PERSONALIZADO HTML
+PUT /index_analizador_1
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "mi_analizador_personalizado": {
+          "type": "custom",
+          "char_filter": ["html_strip"],
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      }
+    }
+  }
+}
+
+#COMPROBAR ANALIZADOR CON TEXTO HTML
+POST /index_analizador_1/_analyze
+{
+  "analyzer": "mi_analizador_personalizado", 
+  "text": "I&apos;m en <em>castellano</em> significa&nbsp;-&nbsp;Yo <strong>soy</strong>"
+}
+
+#CONSTRUCCIÓN ANALIZADOR PERSONALIZADO HTML CON FILTRO PALABRAS PARADA ESPAÑOL
+PUT /index_analizador_2
+{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "castellano_stop": {
+          "type": "stop",
+          "stopwords": "_spanish_"
+        }
+      },
+      "char_filter": {
+        # Añadir filtros de caracter aquí
+      },
+      "tokenizer": {
+        # Añadir tokenizadores aquí
+      },
+      "analyzer": {
+        "mi_analizador_personalizado": {
+          "type": "custom",
+          "char_filter": ["html_strip"],
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "castellano_stop"
+          ]
+        }
+      }
+    }
+  }
+}
+
+#AÑADIR UN ANALIZADOR A UN INDEX YA CREADO (SI PONEMOS EL MISMO NOMBRE SE ACTUALIZARÍA EL EXISTENTE)
+POST /index_analizador_1/_close
+
+PUT /index_analizador_1/_settings
+{
+    "analysis": {
+      "analyzer": {
+        "mi_segundo_analizador": {
+          "type": "custom",
+          "char_filter": ["html_strip"],
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      }
+    }
+  }
+}
+
+POST /index_analizador_1/_open
+
+GET /index_analizador_1/_settings

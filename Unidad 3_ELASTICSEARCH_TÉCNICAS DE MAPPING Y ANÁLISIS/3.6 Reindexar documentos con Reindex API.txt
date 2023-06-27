@@ -1,0 +1,210 @@
+#AÑADIR INDEX CON MAPPING EXPLÍCITO
+PUT /valoraciones
+{
+  "mappings": {
+    "properties": {
+      "puntuacion": { "type": "float" },
+      "contenido": { "type": "text" },
+      "producto_id": { "type": "integer" },
+      "autor": {
+        "properties": {
+          "nombre": { "type": "text" },
+          "apellidos": { "type": "text" },
+          "email": { "type": "keyword" }
+        }
+      }
+    }
+  }
+}
+
+#OBTENER EL MAPEO DE UN ÍNDEX
+GET /valoraciones/_mapping
+
+#INDEXAR DOCUMENTO CUMPLIENDO EL TIPO DE DATOS MAPEADO
+PUT /valoraciones/_doc/1
+{
+  "puntuacion": 5.0,
+  "contenido": "¡Estoy aprendiendo",
+  "producto_id": 123,
+  "autor": {
+    "nombre": "Juan",
+    "apellidos": "Díaz",
+    "email": "jd_dl@ejemplo.com"
+  }
+}
+#INDEXAR DOCUMENTO CUMPLIENDO EL TIPO DE DATOS MAPEADO
+PUT /valoraciones/_doc/2
+{
+  "puntuacion": 4.0,
+  "contenido": "¡Estoy aprendiendo",
+  "producto_id": 124,
+  "autor": {
+    "nombre": "Sara",
+    "apellidos": "Carbonell",
+    "email": "src@ejemplo.com"
+  }
+}
+
+#REINDEXAR SIN CAMBIOS
+POST /_reindex
+{
+  "source": {
+    "index": "valoraciones"
+  },
+  "dest": {
+    "index": "valoraciones_nuevo"
+  }
+}
+
+#ELIMINAMOS LOS DOCUMENTOS PARA INDEXARLOS CON MODIFICACIONES
+POST /valoraciones_nuevo/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#REINDEXAR MODIFICANDO producto_id A STRING
+POST /_reindex
+{
+  "source": {
+    "index": "valoraciones"
+  },
+  "dest": {
+    "index": "valoraciones_nuevo"
+  },
+  "script": {
+    "source": """
+      if (ctx._source.product_id != null) {
+        ctx._source.producto_id = ctx._source.producto_id.toString();
+      }
+    """
+  }
+}
+
+GET /valoraciones_nuevo/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#ELIMINAMOS LOS DOCUMENTOS PARA INDEXARLOS CON MODIFICACIONES
+POST /valoraciones_nuevo/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#REINDEXAR SI SE CUMPLE UNA QUERY (EN ESTE CASO SERÍAN TODOS CON match_all)
+POST /_reindex
+{
+  "source": {
+    "index": "valoraciones",
+    "query": {
+      "match_all": { }
+    }
+  },
+  "dest": {
+    "index": "valoraciones_nuevo"
+  }
+}
+
+GET /valoraciones_nuevo/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#ELIMINAMOS LOS DOCUMENTOS PARA INDEXARLOS CON MODIFICACIONES
+POST /valoraciones_nuevo/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#REINDEXAR SOLO SI LA PUNTUACIÓN ES POSITIVA (>4.5)
+POST /_reindex
+{
+  "source": {
+    "index": "valoraciones",
+    "query": {
+      "range": {
+        "puntuacion": {
+          "gte": 4.5
+        }
+      }
+    }
+  },
+  "dest": {
+    "index": "valoraciones_nuevo"
+  }
+}
+
+GET /valoraciones_nuevo/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#ELIMINAMOS LOS DOCUMENTOS PARA INDEXARLOS CON MODIFICACIONES
+POST /valoraciones_nuevo/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#REINDEXAR SELECCIONANDO SOLO ALGUNOS CAMPOS
+POST /_reindex
+{
+  "source": {
+    "index": "valoraciones",
+    "_source": ["puntuacion", "autor"]
+  },
+  "dest": {
+    "index": "valoraciones_nuevo"
+  }
+}
+
+GET /valoraciones_nuevo/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#ELIMINAMOS LOS DOCUMENTOS PARA INDEXARLOS CON MODIFICACIONES
+POST /valoraciones_nuevo/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#REINDEXAR CAMBIO NOMBRE DE CAMPOS
+POST /_reindex
+{
+  "source": {
+    "index": "valoraciones"
+  },
+  "dest": {
+    "index": "valoraciones_nuevo"
+  },
+  "script": {
+    "source": """
+      ctx._source.descripcion = ctx._source.remove("contenido");
+    """
+  }
+}
+
+GET /valoraciones_nuevo/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}

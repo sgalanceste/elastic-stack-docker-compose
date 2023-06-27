@@ -1,0 +1,25 @@
+#NUEVO DOCUMENTO CON CAMPO FLOAT
+PUT /index_test/_doc/1
+{
+  "price": 7.4
+}
+
+#NUEVO DOCUMENTO CON CAMPO FLOAT DENTRO DE STRING
+PUT /index_test/_doc/2
+{
+  "price": "5.3"
+}
+
+#NUEVO DOCUMENTO CON VALOR INVÁLIDO
+PUT /index_test/_doc/3
+{
+  "price": "7.4m"
+}
+
+#CONSULTAR ELEMENTOS DEL INDEX
+GET /index_test/_search
+{
+  "query":{
+    "match_all":{}
+  }
+}
