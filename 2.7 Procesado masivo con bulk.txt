@@ -36,3 +36,6 @@ POST /productos/_delete_by_query
     "match_all": {}
   }
 }
+
+
+curl -k -H "Content-Type: application/x-ndjson" -H "Authorization: ApiKey cadena_api”-X POST https://nombre_url:9243/nombre_index/_bulk --data- binary "@nombre_fichero.json"
