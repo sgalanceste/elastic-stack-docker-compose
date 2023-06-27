@@ -1,0 +1,38 @@
+#INDEXAR DOCUMENTOS CON BULK
+POST /_bulk
+{ "index": { "_index": "productos", "_id": 200 } }
+{ "name": "Cafetera", "precio": 199, "stock": 5 }
+{ "create": { "_index": "productos", "_id": 201 } }
+{ "name": "Aspirador", "precio": 149, "stock": 14 }
+{ "create": { "_index": "productos", "_id": 202 } }
+{ "name": "Aspirador", "precio": 119, "stock": 12 }
+
+#ACTUALIZAR Y ELIMINAR DOCUMENTOS CON BULK
+POST /_bulk
+{ "update": { "_index": "productos", "_id": 201 } }
+{ "doc": { "precio": 129 } }
+{ "delete": { "_index": "productos", "_id": 200 } }
+
+#ACTUALIZAR Y ELIMINAR DOCUMENTOS CON BULK ESPECIFICANDO EL INDEX
+POST /productos/_bulk
+{ "update": { "_id": 201 } }
+{ "doc": { "precio": 129 } }
+{ "delete": { "_id": 202 } }
+
+
+
+#CONSULTAR MASIVAMENTE DOCUMENTOS DE UN INDEX
+GET /productos/_search
+{
+  "query":{
+    "match_all": {}
+  }
+}
+
+#ELIMINAR MASIVAMENTE DOCUMENTOS
+POST /productos/_delete_by_query
+{
+  "query": {
+    "match_all": {}
+  }
+}
