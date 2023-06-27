@@ -1,0 +1,29 @@
+#BÚSQUEDA FULL-TEXT EN MÚLTIPLES CAMPOS
+GET /productos/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "chocolate",
+      "fields": [ "name", "etiquetas" ]
+    }
+  }
+}
+
+#BÚSQUEDA FULL-TEXT FRASE
+GET /productos/_search
+{
+  "query": {
+    "match_phrase": {
+      "name": "chocolate milk"
+    }
+  }
+}
+
+GET /productos/_search
+{
+  "query": {
+    "match_phrase": {
+      "name": "milk chocolate"
+    }
+  }
+}

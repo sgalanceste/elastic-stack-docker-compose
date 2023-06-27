@@ -1,0 +1,42 @@
+#INDEXAMOS DOCUMENTOS
+PUT /productos/_doc/100
+{ 
+  "nombre":"pan",
+  "precio":2,
+  "stock":20,
+  "fecha_reg":"2024/03/01"
+}
+
+PUT /productos/_doc/101
+{ 
+  "nombre":"mermelada",
+  "precio":2,
+  "stock":20,
+  "fecha_reg":"2024/04/01"
+}
+
+PUT /productos/_doc/102
+{ 
+  "nombre":"naranajas",
+  "precio":5,
+  "stock":40,
+  "fecha_reg":"2024/04/05"
+}
+
+PUT /productos/_doc/103
+{ 
+  "nombre":"naranjas",
+  "precio":3,
+  "stock":50,
+  "fecha_reg":"2024/06/05"
+}
+
+PUT /productos/_doc/104
+{ 
+  "nombre":"peras",
+  "precio":6,
+  "stock":40,
+  "fecha_reg":"2024/07/05"
+}
+
+GET /productos/_mapping

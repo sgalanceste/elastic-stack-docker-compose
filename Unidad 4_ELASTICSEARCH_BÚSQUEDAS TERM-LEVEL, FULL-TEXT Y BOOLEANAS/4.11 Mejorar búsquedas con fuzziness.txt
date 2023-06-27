@@ -1,0 +1,65 @@
+#BÚSQUEDA FULL-TEXT
+GET /productos2/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "chocolate"
+      }
+    }
+  }
+}
+
+#BÚSQUEDA FULL-TEXT CON ERROR TIPOGRÁFICO
+GET /productos2/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "choc0late",
+        "fuzziness": "auto"
+      }
+    }
+  }
+}
+
+#BÚSQUEDA FULL-TEXT CON ERROR TIPOGRÁFICO EN DIFERENTES TÉRMINOS
+GET /productos2/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "choc0late m8lk",
+        "operator": "and", 
+        "fuzziness": "auto"
+      }
+    }
+  }
+}
+
+#BÚSQUEDA FULL-TEXT CON ERROR TIPOGRÁFICO TRASPOSICIÓN LETRAS Y NÚMERO MÁXIMO
+GET /productos2/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "chocloate",
+        "fuzziness": "1"
+      }
+    }
+  }
+}
+
+#BÚSQUEDA FULL-TEXT CON ERROR TIPOGRÁFICO DESHABILITAR TRASPOSICIONES
+GET /productos2/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "chocloate",
+        "fuzziness": "1",
+        "fuzzy_transpositions": "false"
+      }
+    }
+  }
+}

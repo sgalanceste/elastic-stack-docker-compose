@@ -1,0 +1,20 @@
+#BÚSQUEDA QUERYDSL DE TODOS LOS ELEMENTOS
+GET /productos/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#BÚSQUEDA QUERYDSL POR UN CAMPO
+GET /productos/_search
+{
+  "query": {
+    "match": {
+      "nombre": "pan"
+    }
+  }
+}
+
+#BÚSQUEDA URI
+GET /productos/_search?q=nombre:pan

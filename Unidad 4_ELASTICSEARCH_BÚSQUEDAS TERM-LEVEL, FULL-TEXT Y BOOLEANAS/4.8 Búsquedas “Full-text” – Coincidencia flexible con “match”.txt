@@ -1,0 +1,38 @@
+#VERIFICAMOS MAPPING
+GET /productos/_mapping
+
+#BÚSQUEDA FULL-TEXT (OR POR DEFECTO)
+GET /productos/_search
+{
+  "query": {
+    "match": {
+      "name": "productos que tienen chocolate"
+    }
+  }
+}
+
+#BÚSQUEDA FULL-TEXT CON OPERADOR AND
+GET /productos/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "productos que tienen chocolate",
+        "operator": "and"
+      }
+    }
+  }
+}
+
+#BÚSQUEDA FULL-TEXT CON OPERADOR AND
+GET /productos/_search
+{
+  "query": {
+    "match": {
+      "name": {
+        "query": "chocolate milk",
+        "operator": "and"
+      }
+    }
+  }
+}

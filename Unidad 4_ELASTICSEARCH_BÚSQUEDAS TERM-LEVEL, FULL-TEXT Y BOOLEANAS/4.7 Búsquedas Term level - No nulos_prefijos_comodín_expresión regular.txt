@@ -1,0 +1,65 @@
+#VERIFICAMOS TODOS LOS ELEMENTOS
+GET /productos/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#INDEXAMOS UN DOCUMENTO SIN EL CAMPO PRECIO
+PUT /productos/_doc/120
+{ 
+  "nombre":"pan",
+  "stock":80,
+  "fecha_reg":"2024/08/01"
+}
+
+#BÚSQUEDA POR VALORES DIFERENTES DE NULL
+GET /productos/_search
+{
+  "query": {
+    "exists": {
+      "field": "precio"
+    }
+  }
+}
+
+#BÚSQUEDA POR UN PREFIJO
+GET /productos/_search
+{
+  "query": {
+    "prefix": {
+      "nombre": "pa"
+    }
+  }
+}
+
+#BÚSQUEDA CON COMODÍN
+GET /productos/_search
+{
+  "query": {
+    "wildcard": {
+      "nombre": "mer*da"
+    }
+  }
+}
+
+GET /productos/_search
+{
+  "query": {
+    "wildcard": {
+      "nombre": "me?melada"
+    }
+  }
+}
+
+
+#BÚSQUEDA EXPRESIÓN REGULAR
+GET /productos/_search
+{
+  "query": {
+    "regexp": {
+      "nombre": "mermel[a-zA-Z]da"
+    }
+  }
+}

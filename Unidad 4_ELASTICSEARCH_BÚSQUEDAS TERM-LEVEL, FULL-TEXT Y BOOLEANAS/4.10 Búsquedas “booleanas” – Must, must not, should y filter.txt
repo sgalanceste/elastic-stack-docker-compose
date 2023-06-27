@@ -1,0 +1,120 @@
+#BÚSQUEDA BOOLEANA MUST CON 2 CONDICIONES
+GET /productos/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "name": "chocolate"
+          }
+        },
+        {
+          "range": {
+            "precio": {
+              "lte": 150
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+#BÚSQUEDA BOOLEANA MUST Y FILTER
+GET /productos/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "name": "chocolate"
+          }
+        }
+      ],
+      "filter": [
+        {
+          "range": {
+            "precio": {
+              "lte": 150
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+#BÚSQUEDA BOOLEANA MUST, MUST NOT Y FILTER
+GET /productos/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "name": "chocolate"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match": {
+            "name": "milk"
+          }
+        }
+      ],
+      "filter": [
+        {
+          "range": {
+            "precio": {
+              "lte": 150
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+#BÚSQUEDA BOOLEANA MUST, MUST NOT, SHOULD Y FILTER
+GET /productos/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "name": "chocolate"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match": {
+            "name": "milk"
+          }
+        }
+      ],
+      "should": [
+        {
+          "range": {
+            "vendido": {
+              "gte":200
+            }
+          }
+        }
+      ],
+      "filter": [
+        {
+          "range": {
+            "precio": {
+              "lte": 150
+            }
+          }
+        }
+      ]
+    }
+  }
+}
