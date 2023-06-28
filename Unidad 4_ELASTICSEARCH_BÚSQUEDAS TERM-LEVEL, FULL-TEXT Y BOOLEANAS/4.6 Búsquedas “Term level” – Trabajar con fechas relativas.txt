@@ -1,0 +1,47 @@
+#BÚSQUEDA POR FECHA MAYOR QUE
+GET /productos/_search
+{
+  "query": {
+    "range": {
+      "fecha_reg": {
+        "gte": "2024/04/03"
+      }
+    }
+  }
+}
+
+#BÚSQUEDA POR FECHA MAYOR QUE FECHA ANCLAJE + 3 DÍAS
+GET /productos/_search
+{
+  "query": {
+    "range": {
+      "fecha_reg": {
+        "gte": "2024/04/03||+3d"
+      }
+    }
+  }
+}
+
+#BÚSQUEDA POR FECHA MAYOR QUE FECHA ANCLAJE REDONDEADA + 3 DÍAS
+GET /productos/_search
+{
+  "query": {
+    "range": {
+      "fecha_reg": {
+        "gte": "2024/04/03||/M+3d"
+      }
+    }
+  }
+}
+
+#BÚSQUEDA POR FECHA MAYOR QUE FECHA ACTUAL + 1 MES
+GET /productos/_search
+{
+  "query": {
+    "range": {
+      "fecha_reg": {
+        "gte": "now+1M"
+      }
+    }
+  }
+}

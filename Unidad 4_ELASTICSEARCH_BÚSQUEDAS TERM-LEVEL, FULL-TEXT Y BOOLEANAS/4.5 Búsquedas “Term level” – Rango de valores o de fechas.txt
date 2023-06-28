@@ -1,0 +1,39 @@
+#BÚSQUEDA POR RANGO DE VALORES
+GET /productos/_search
+{
+  "query": {
+    "range": {
+      "stock": {
+        "gte": 25,
+        "lte": 45
+      }
+    }
+  }
+}
+
+#BÚSQUEDA POR RANGO DE FECHAS
+GET /productos/_search
+{
+  "query": {
+    "range": {
+      "fecha_reg": {
+        "gte": "2024/04/01",
+        "lte": "2024/07/01"
+      }
+    }
+  }
+}
+
+#BÚSQUEDA POR RANGO DE FECHAS CON FORMATO PERSONALIZADO
+GET /productos/_search
+{
+  "query": {
+    "range": {
+      "fecha_reg": {
+        "gte": "01-04-2024",
+        "lte": "01-07-2024",
+        "format": "dd-MM-yyyy"
+      }
+    }
+  }
+}

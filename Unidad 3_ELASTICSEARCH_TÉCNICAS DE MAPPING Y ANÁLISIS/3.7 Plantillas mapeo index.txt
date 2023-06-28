@@ -1,0 +1,25 @@
+#CREAR PLANTILLA "logs"
+PUT /_template/logs
+{
+  "index_patterns": ["logs-*"],
+  
+  "mappings": {
+    "properties": {
+      "@timestamp": {
+        "type": "date"
+      },
+      "url.original": {
+        "type": "keyword"
+      },
+      "http.response.status_code": {
+        "type": "long"
+      }
+    }
+  }
+}
+
+#AÑADIR ÍNDEX QUE CUMPLE EL PATRÓN DE LA PLANTILLA
+PUT /logs-2023-01
+
+#VERIFICAMOS EL MAPPING DEL INDEX
+GET /logs-2023-01

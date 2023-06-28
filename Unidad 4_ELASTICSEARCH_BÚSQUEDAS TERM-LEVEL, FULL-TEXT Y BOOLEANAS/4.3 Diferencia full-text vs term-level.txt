@@ -1,0 +1,38 @@
+#BÚSQUEDA TODOS LOS DOCUMENTOS DEL INDEX
+GET /productos/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#BÚSQUEDA TERM-LEVEL (term)
+GET /productos/_search
+{
+  "query": {
+    "term": {
+      "nombre": "pan"
+    }
+  }
+}
+
+#BÚSQUEDA TERM-LEVEL (term)
+GET /productos/_search
+{
+  "query": {
+    "term": {
+      "nombre": "Pan"
+    }
+  }
+}
+
+#BÚSQUEDA FULL-TEXT (match)
+GET /productos/_search
+{
+  "query": {
+    "match": {
+      "nombre": "Pan"
+    }
+  }
+}
+

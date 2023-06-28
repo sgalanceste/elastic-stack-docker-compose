@@ -1,0 +1,68 @@
+#AÑADIR MAPEO A UN INDEX EXPLÍCITAMENTE
+PUT /valoraciones
+{
+  "mappings": {
+    "properties": {
+      "puntuacion": { "type": "float" },
+      "contenido": { "type": "text" },
+      "producto_id": { "type": "integer" },
+      "autor": {
+        "properties": {
+          "nombre": { "type": "text" },
+          "apellidos": { "type": "text" },
+          "email": { "type": "keyword" }
+        }
+      }
+    }
+  }
+}
+
+#INDEXAR DOCUMENTO CUMPLIENDO EL TIPO DE DATOS MAPEADO
+PUT /valoraciones/_doc/1
+{
+  "puntuacion": 5.0,
+  "contenido": "¡Estoy aprendiendo",
+  "producto_id": 123,
+  "autor": {
+    "nombre": "John",
+    "apellidos": "Doe",
+    "email": "johndoe123@example.com"
+  }
+}
+
+#OBTENER EL MAPEO DE UN ÍNDEX
+GET /valoraciones/_mapping
+
+#OBTENER EL MAPEO DE UN CAMPO ESPECÍFICO
+GET /valoraciones/_mapping/field/contenido
+
+#OBTENER EL MAPEO DE UN CAMPO ARRAY
+GET /valoraciones/_mapping/field/autor.email
+
+#ALTERNATIVA DE MAPEO CON CAMPOS ARRAY
+PUT /valoraciones_dot
+{
+  "mappings": {
+    "properties": {
+      "puntuacion": { "type": "float" },
+      "contenido": { "type": "text" },
+      "producto_id": { "type": "integer" },
+      "autor.nombre": { "type": "text" },
+      "autor.apellidos": { "type": "text" },
+      "autor.email": { "type": "keyword" }
+    }
+  }
+}
+
+#OBTENER EL MAPEO DE UN ÍNDEX
+GET /valoraciones_dot/_mapping
+
+#AÑADIR MAPEO DE UN NUEVO CAMPO AL INDEX
+PUT /valoraciones/_mapping
+{
+  "properties": {
+    "fecha_creación": {
+      "type": "date"
+    }
+  }
+}
