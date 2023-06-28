@@ -1,0 +1,31 @@
+PUT /paises_test
+{
+  "mappings": { 
+    "properties": {
+      "Esperanza de vida": {
+        "type": "keyword"
+      },
+      "Pais": {
+        "type": "keyword"
+      },
+      "Poblacion": {
+        "type": "long"
+      },
+      "Renta per capita": {
+        "type": "long"
+      }
+    }
+  }
+}
+
+POST /_security/role/logstash_escritura
+{
+  "run_as": [ "logstash_escritura" ],
+  "cluster": [ "monitor" ],
+  "indices": [
+    {
+      "names": [ "paises_test" ],
+      "privileges": ["write","all"]
+    }
+  ]
+}
