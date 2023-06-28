@@ -1,0 +1,29 @@
+#ALTERNATIVA SI NO TENEMOS UN CAMPO GEO-POINT Y EN SU LUGAR TENEMOS LATITUD Y LONGITUD POR SEPARADO
+GET /prueba/_mapping
+
+PUT /prueba/_mapping
+{
+  "properties": {
+    "loc": {
+      "type": "geo_point"
+    }
+  }
+}
+
+POST prueba/_update_by_query
+{
+  "query": {
+    "match_all": {}
+  },
+  "script": {
+    "source": "ctx._source.location = ['lat': ctx._source.LATITUD, 'lon': ctx._source.LONGITUD]",
+    "lang": "painless"
+  }
+}
+
+GET prueba/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
